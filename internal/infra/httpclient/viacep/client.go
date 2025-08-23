@@ -11,10 +11,10 @@ import (
 )
 
 type ViaCepClient struct {
-	Client http.Client
+	Client *http.Client
 }
 
-func NewViaCepClient(client http.Client) *ViaCepClient {
+func NewViaCepClient(client *http.Client) *ViaCepClient {
 	return &ViaCepClient{
 		Client: client,
 	}

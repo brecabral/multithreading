@@ -11,10 +11,10 @@ import (
 )
 
 type BrasilApiClient struct {
-	Client http.Client
+	Client *http.Client
 }
 
-func NewBrasilApiClient(client http.Client) *BrasilApiClient {
+func NewBrasilApiClient(client *http.Client) *BrasilApiClient {
 	return &BrasilApiClient{
 		Client: client,
 	}
