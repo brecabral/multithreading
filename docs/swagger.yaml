@@ -1,0 +1,26 @@
+basePath: /
+host: localhost:8000
+info:
+  contact: {}
+  description: Query multiple providers concurrently and return the first response.
+  title: CEP Multithreading API
+  version: "1.0"
+paths:
+  /{cep}:
+    get:
+      description: Search CEP concurrently through multiple APIs
+      parameters:
+      - description: 8-digit CEP without hyphen
+        in: path
+        name: cep
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+        "400":
+          description: Bad Request
+      summary: Query CEP
+      tags:
+      - cep
+swagger: "2.0"

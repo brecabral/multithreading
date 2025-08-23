@@ -1,0 +1,39 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "Query multiple providers concurrently and return the first response.",
+        "title": "CEP Multithreading API",
+        "contact": {},
+        "version": "1.0"
+    },
+    "host": "localhost:8000",
+    "basePath": "/",
+    "paths": {
+        "/{cep}": {
+            "get": {
+                "description": "Search CEP concurrently through multiple APIs",
+                "tags": [
+                    "cep"
+                ],
+                "summary": "Query CEP",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "8-digit CEP without hyphen",
+                        "name": "cep",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    }
+                }
+            }
+        }
+    }
+}

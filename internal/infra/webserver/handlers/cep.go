@@ -18,6 +18,15 @@ func NewCepHandler(service *services.AddressService) *CepHandler {
 	}
 }
 
+// GetCep godoc
+//
+//	@Summary		Query CEP
+//	@Description	Search CEP concurrently through multiple APIs
+//	@Tags			cep
+//	@Param			cep	path	string	true	"8-digit CEP without hyphen"
+//	@Success		200
+//	@Failure		400
+//	@Router			/{cep} [get]
 func (h *CepHandler) GetCep(w http.ResponseWriter, r *http.Request) {
 	cep := chi.URLParam(r, "cep")
 	if !validators.IsValidCep(cep) {

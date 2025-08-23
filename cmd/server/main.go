@@ -4,14 +4,23 @@ import (
 	"log"
 	"net/http"
 
+	_ "github.com/brecabral/multithreading/docs"
 	"github.com/brecabral/multithreading/internal/domain"
 	"github.com/brecabral/multithreading/internal/infra/httpclient/brasilapi"
 	"github.com/brecabral/multithreading/internal/infra/httpclient/viacep"
 	"github.com/brecabral/multithreading/internal/infra/webserver/handlers"
 	"github.com/brecabral/multithreading/internal/services"
 	"github.com/go-chi/chi/v5"
+
+	httpSwagger "github.com/swaggo/http-swagger/v2"
 )
 
+//	@title			CEP Multithreading API
+//	@version		1.0
+//	@description	Query multiple providers concurrently and return the first response.
+
+// @host		localhost:8000
+// @BasePath	/
 func main() {
 	httpClient := &http.Client{}
 
@@ -25,6 +34,7 @@ func main() {
 
 	router := chi.NewRouter()
 	router.Get("/{cep}", cepHandler.GetCep)
+	router.Get("/docs/*", httpSwagger.Handler(httpSwagger.URL("http://localhost:8000/docs/doc.json")))
 
 	log.Fatal(http.ListenAndServe(":8000", router))
 }
