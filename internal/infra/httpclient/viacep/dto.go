@@ -14,4 +14,5 @@ type viaCepResponse struct {
 	GIA         string `json:"gia"`
 	DDD         string `json:"ddd"`
 	Siafi       string `json:"siafi"`
+	Erro        bool   `json:"erro"`
 }

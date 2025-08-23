@@ -1,6 +1,7 @@
 package viacep
 
 import (
+	"context"
 	"encoding/json"
 	"errors"
 	"io"
@@ -20,7 +21,7 @@ func NewViaCepClient(client *http.Client) *ViaCepClient {
 	}
 }
 
-func (c *ViaCepClient) FindAddress(cep string) (domain.Address, error) {
+func (c *ViaCepClient) FindAddress(ctx context.Context, cep string) (domain.Address, error) {
 	var addr domain.Address
 
 	if !validators.IsValidCep(cep) {
@@ -28,7 +29,7 @@ func (c *ViaCepClient) FindAddress(cep string) (domain.Address, error) {
 	}
 
 	url := "http://viacep.com.br/ws/" + cep + "/json/"
-	req, err := http.NewRequest(http.MethodGet, url, nil)
+	req, err := http.NewRequestWithContext(ctx, http.MethodGet, url, nil)
 	if err != nil {
 		return addr, err
 	}
@@ -50,6 +51,10 @@ func (c *ViaCepClient) FindAddress(cep string) (domain.Address, error) {
 		return addr, err
 	}
 
-	addr = toAddress(response)
+	if response.Erro {
+		return addr, errors.New("Not Found CEP or API error")
+	}
+
+	addr = toAddress(cep, response)
 	return addr, nil
 }

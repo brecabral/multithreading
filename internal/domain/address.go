@@ -1,5 +1,7 @@
 package domain
 
+import "context"
+
 type Address struct {
 	Cep          string `json:"cep"`
 	State        string `json:"state"`
@@ -10,5 +12,5 @@ type Address struct {
 }
 
 type Provider interface {
-	FindAddress(cep string) (Address, error)
+	FindAddress(ctx context.Context, cep string) (Address, error)
 }

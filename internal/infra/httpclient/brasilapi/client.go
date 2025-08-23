@@ -1,6 +1,7 @@
 package brasilapi
 
 import (
+	"context"
 	"encoding/json"
 	"errors"
 	"io"
@@ -20,7 +21,7 @@ func NewBrasilApiClient(client *http.Client) *BrasilApiClient {
 	}
 }
 
-func (c *BrasilApiClient) FindAddress(cep string) (domain.Address, error) {
+func (c *BrasilApiClient) FindAddress(ctx context.Context, cep string) (domain.Address, error) {
 	var addr domain.Address
 
 	if !validators.IsValidCep(cep) {
@@ -28,7 +29,7 @@ func (c *BrasilApiClient) FindAddress(cep string) (domain.Address, error) {
 	}
 
 	url := "https://brasilapi.com.br/api/cep/v1/" + cep
-	req, err := http.NewRequest(http.MethodGet, url, nil)
+	req, err := http.NewRequestWithContext(ctx, http.MethodGet, url, nil)
 	if err != nil {
 		return addr, err
 	}
