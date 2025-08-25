@@ -12,5 +12,5 @@ type Address struct {
 }
 
 type Provider interface {
-	FindAddress(ctx context.Context, cep string) (Address, error)
+	FindAddress(ctx context.Context, cep string) (*Address, error)
 }
