@@ -33,11 +33,56 @@ const docTemplate = `{
                 ],
                 "responses": {
                     "200": {
-                        "description": "OK"
+                        "description": "Returned address from fastest provider",
+                        "schema": {
+                            "$ref": "#/definitions/domain.Address"
+                        }
                     },
                     "400": {
-                        "description": "Bad Request"
+                        "description": "Invalid CEP",
+                        "schema": {
+                            "$ref": "#/definitions/handlers.responseError"
+                        }
+                    },
+                    "504": {
+                        "description": "Timeout or error on APIs",
+                        "schema": {
+                            "$ref": "#/definitions/handlers.responseError"
+                        }
                     }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "domain.Address": {
+            "type": "object",
+            "properties": {
+                "api": {
+                    "type": "string"
+                },
+                "cep": {
+                    "type": "string"
+                },
+                "city": {
+                    "type": "string"
+                },
+                "neighborhood": {
+                    "type": "string"
+                },
+                "state": {
+                    "type": "string"
+                },
+                "street": {
+                    "type": "string"
+                }
+            }
+        },
+        "handlers.responseError": {
+            "type": "object",
+            "properties": {
+                "error": {
+                    "type": "string"
                 }
             }
         }
