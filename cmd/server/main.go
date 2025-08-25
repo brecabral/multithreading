@@ -3,6 +3,7 @@ package main
 import (
 	"log"
 	"net/http"
+	"time"
 
 	_ "github.com/brecabral/multithreading/docs"
 	"github.com/brecabral/multithreading/internal/domain"
@@ -14,6 +15,8 @@ import (
 
 	httpSwagger "github.com/swaggo/http-swagger/v2"
 )
+
+const TIMEOUT_LIMIT = 1 * time.Second
 
 //	@title			CEP Multithreading API
 //	@version		1.0
@@ -28,7 +31,7 @@ func main() {
 	brasilApiClient := brasilapi.NewBrasilApiClient(httpClient)
 	providers := []domain.Provider{viaCepClient, brasilApiClient}
 
-	addressService := services.NewAddressService(providers)
+	addressService := services.NewAddressService(providers, TIMEOUT_LIMIT)
 
 	cepHandler := handlers.NewCepHandler(addressService)
 
